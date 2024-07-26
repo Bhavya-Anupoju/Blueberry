@@ -6,7 +6,7 @@ const Cart = () => {
   const cartItems = useSelector((store) => store.cart.items);
   let totalCost = 0;
   let data = [];
-  cartItems.map((item) => {
+  cartItems.forEach((item) => {
     let index = data.findIndex((x) => x.id === item.id);
     if (index === -1) {
       data.push({

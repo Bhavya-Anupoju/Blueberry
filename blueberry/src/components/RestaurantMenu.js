@@ -20,8 +20,8 @@ const RestaurantMenu = () => {
     // totalRatingsString,
   } = resInfo?.cards[2]?.card?.card?.info;
 
-  const { itemCards } =
-    resInfo?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card;
+  // const { itemCards } =
+  //   resInfo?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card;
 
   const categories =
     resInfo?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
