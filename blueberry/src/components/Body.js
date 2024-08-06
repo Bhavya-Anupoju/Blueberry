@@ -17,17 +17,27 @@ const Body = () => {
   }, []);
 
   const fetchData = async () => {
-    try {
-      const data = await fetch(
-        "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.37240&lng=78.43780&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING" ||
-          "https://corsproxy.io/?https://www.swiggy.com/mapi/homepage/getCards?lat=17.37240&lng=78.43780"
-      );
+    setLoading(true);
 
-      if (!data.ok) {
-        throw new Error(`HTTP error! Status: ${data.status}`);
+    const desktopUrl =
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.37240&lng=78.43780&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING";
+    const mobileUrl =
+      "https://www.swiggy.com/mapi/homepage/getCards?lat=17.37240&lng=78.43780";
+
+    const selectedUrl = window.innerWidth >= 768 ? desktopUrl : mobileUrl;
+
+    // Use a CORS proxy
+    const corsProxy = "https://corsproxy.io/?";
+    const proxiedUrl = corsProxy + encodeURIComponent(selectedUrl);
+
+    try {
+      const response = await fetch(proxiedUrl);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      const json = await data.json();
+      const json = await response.json();
       console.log(json);
 
       const restaurants =
@@ -46,6 +56,7 @@ const Body = () => {
       setLoading(false);
     }
   };
+
 
   const onlineStatus = useOnlineStatus();
   useEffect(() => {
